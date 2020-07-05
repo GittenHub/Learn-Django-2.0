@@ -56,7 +56,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
-        'APP_DIRS': True,
+        'APP_DIRS': True, #app文件夹内的模板文件夹是否有效
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',

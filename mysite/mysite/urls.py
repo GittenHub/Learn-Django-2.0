@@ -14,12 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from . import views
-from article.views import article_detail
+from article.views import article_detail,article_list
 
 urlpatterns = [
     path('admin/', admin.site.urls),#后台管理网址
     path('', views.index),   #设置一个空的路由，不设置就是ip后没有目录，需要创建一个方法
-    path('article/<int:article_id>', article_detail, name="article_detail"), #本行中的<int:article_id>代表这是一个整数变量，且变量名与对应views中的处理方法传递的参数相同;name是表示别名
+    path('article/', include('article.urls')), 
 ]

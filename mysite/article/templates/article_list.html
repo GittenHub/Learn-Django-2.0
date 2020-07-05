@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	{% for article in articles %}  <!-- 模板中的for语句 -->
+		<!-- <a href="/article/{{article.pk}}">{{article.title}}</a> -->
+		<a href="{% url 'article_detail' article.pk %}">{{article.title}}</a>   <!-- 模板中的URL标签 -->
+	{% endfor %}
+</body>
+</html>
