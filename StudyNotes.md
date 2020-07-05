@@ -283,11 +283,43 @@ urlpatterns = [
 
 https://www.bilibili.com/video/BV1LW411877A/
 
+## 定制admin后台
 
+设置模型\__str__
 
+### 修改article/modles.py
 
+```python
+from django.db import models
+# Create your models here.
+class Article(models.Model):
+	title = models.CharField(max_length=30) 
+	content = models.TextField()  #用了两种字段模型来穿件类中的两个属性
 
+	def __str__(self):  #在这个类中添加一个方法  标注具体是什么对象
+		return "<Article: %s>" % self.title
+```
 
+### 修改article/admin.py
+
+```python
+from django.contrib import admin
+from .models import Article
+
+# Register your models here.在这里注册你的模型
+class ArticleAdmin(admin.ModelAdmin):
+	list_display = ("title","content")  #元组或列表  最好元组
+
+admin.site.register(Article,ArticleAdmin)
+```
+
+修改前的admin界面：
+
+![](https://raw.githubusercontent.com/GittenHub/GittenPicRepo/master/20200705233931.png)
+
+修改后：
+
+![image-20200705234038390](C:\Users\Gitten\AppData\Roaming\Typora\typora-user-images\image-20200705234038390.png)
 
 
 
