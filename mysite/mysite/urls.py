@@ -21,5 +21,5 @@ from article.views import article_detail,article_list
 urlpatterns = [
     path('admin/', admin.site.urls),#后台管理网址
     path('', views.index),   #设置一个空的路由，不设置就是ip后没有目录，需要创建一个方法
-    path('article/', include('article.urls')), 
+    path('article/', include('article.urls')), #使用include引用app中的urls.py
 ]
