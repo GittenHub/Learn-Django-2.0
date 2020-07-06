@@ -319,13 +319,38 @@ admin.site.register(Article,ArticleAdmin)
 
 修改后：
 
-![image-20200705234038390](C:\Users\Gitten\AppData\Roaming\Typora\typora-user-images\image-20200705234038390.png)
+![](https://raw.githubusercontent.com/GittenHub/GittenPicRepo/master/20200706133259.png)
+
+### 修改id排序（降序、升序）：
+
+#### 在admin.py中修改
+
+```python
+class ArticleAdmin(admin.ModelAdmin):
+	list_display = ("id","title","content")  #元组或列表  最好元组
+	ordering = ("id",)  #注意在这要加一个逗号，代表是一个元组，否则识别为普通括号
+  #ordering = ("-id",)  #倒序
+```
+
+#### 在models.py中修改
 
 
 
+## 修改模型
 
+> 修改模型后需要生成迁移文件，再迁移
+>
+> ` python manage.py makemigrations`
+>
+> ` python manage.py migrate`
 
+> 修改模型前备份数据库
 
+### 让文章显示创建日期的三种方法
+
+1. 修改models.py，在Article类中增加属性`created_time = models.DateTimeField()`，然后在admin.py中的ArticleAdmin中的list_display属性元组中增加"created_time"字段，迁移启动服务器后，在终端中设置：选择1，输入timezone.now
+2. 修改admin.py直接在Article类中增加属性`created_time = models.DateTimeField(default=timezone.now)`设置默认值为现在的日期（记得import）
+3. 在`models.DateTimeField(auto_now_add = True) `使用默认参数`auto_now_add = True`
 
 
 
