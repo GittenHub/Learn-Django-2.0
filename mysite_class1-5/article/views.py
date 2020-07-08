@@ -26,7 +26,8 @@ def article_detail(request,article_id):
 
 
 def article_list(request):
-	articles = Article.objects.all()
+	#articles = Article.objects.all()
+	articles = Article.objects.filter(is_deleted = False)
 	context = {}
 	context["articles"] = articles
 	return render_to_response("article_list.html",context)

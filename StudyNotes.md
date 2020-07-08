@@ -346,11 +346,218 @@ class ArticleAdmin(admin.ModelAdmin):
 
 > 修改模型前备份数据库
 
-### 让文章显示创建日期的三种方法
+### 让文章显示创建日期的三种方法（设置默认值）
 
 1. 修改models.py，在Article类中增加属性`created_time = models.DateTimeField()`，然后在admin.py中的ArticleAdmin中的list_display属性元组中增加"created_time"字段，迁移启动服务器后，在终端中设置：选择1，输入timezone.now
 2. 修改admin.py直接在Article类中增加属性`created_time = models.DateTimeField(default=timezone.now)`设置默认值为现在的日期（记得import）
 3. 在`models.DateTimeField(auto_now_add = True) `使用默认参数`auto_now_add = True`
+
+
+
+### 外间 作者的名称
+
+Django自带用户模型，在模型中的Article类中新增author属性，用models.ForeignKey()关联外键到User库
+
+```python
+#article/models.py/Article
+from django.contrib.auth.models import User   #引入用户包
+
+class Article(models.Model):
+    author = models.ForeignKey(User, on_delete=models.DO_NOTHING, default=1) 
+	#几个参数：1、关联到哪个表；2、文章删除时是否删除作者；3、默认值，在这作者对应的外键的值
+
+```
+
+再在admin.py中增加"author"
+
+### 文章逻辑删除
+
+```python
+#article/models.py/Article
+from django.db import models
+
+class Article(models.Model):
+    is_deleted = models.BooleanField(default=False)  #逻辑删除，而不是真实在数据库中删除
+	readed_num = models.IntegerField(default=0)  #阅读量
+```
+
+再在admin.py中增加"is_deleted"、""
+
+文章列表（http://127.0.0.1:8000/article/）中不显示逻辑删除的文章：
+
+```python
+#article/views.py
+def article_list(request):
+	articles = Article.objects.filter(is_deleted = False)  #只筛选出未逻辑删除的文章
+```
+
+
+
+
+
+# 06.开始完整制作网站
+
+动力影响学习的热情
+
+
+
+## 如何用Django开发网站
+
+要做什么
+
+设计网站圆形
+
+具体开发
+
+测试
+
+部署上线
+
+
+
+业务流程
+
+功能木块
+
+前端布局
+
+后端模型
+
+
+
+## 接下来的教程
+
+### 目的
+
+1. 通过完整的开发过程学习Django
+2. 对一般的网站开发有全面的认识
+
+### 个人博客网站
+
+- 项目管理
+  - IDE
+  - 本地虚拟环境
+  - Git/Github
+
+- 前端开发
+  - HTML + JavaScript + CSS
+  - jQuery
+  - Bootstrap
+  - ajax
+- 后端开放
+  - 博客管理和展示
+  - 用户登录和注册
+  - 评论和回复
+  - 点赞
+- 数据库和服务器
+  - MySQL
+  - linux（centos、Ubuntu）
+  - 网站部署
+
+### IDE
+
+记事本
+
+vim/Emacs
+
+sublime text
+
+PyCharm
+
+
+
+# 07.构建个人博客网站
+
+## 1.简单构建
+
+网站的功能模块：
+
+- 博客
+  - 博文
+  - 博客分类
+  - 博客标签
+- 评论
+  - 
+- 点赞
+- 阅读
+- 用户-->第三方登录（QQ/微博）
+
+> 功能模块 ≈ Django App
+
+
+
+## 2.开启本地虚拟环境
+
+隔开python项目的运行环境
+
+1. 避免多个项目之间python库的冲突
+2. 完整便捷到处python库的列表
+
+`$ pip install virtualenv`
+
+## 3.virtualenv的使用方法
+
+- 创建：`virtualenv<虚拟环境名称>`
+- 启动：`$ cd 虚拟环境名称\Scripts\activate`  
+- 退出：`deactivate`
+
+## 4.初步创建blog应用
+
+博文 + 博客分类
+
+- 一篇博客一种分类，本教程采用这种
+- 一篇博客多种分类
+
+```
+django-admin startproject mysite
+python manage.py startapp blog
+python manage.py migrate
+python manage.py createsuperuser
+```
+
+> 用户名：gitten
+>
+> 密码：guoyiteng
+
+
+
+##5.pip一键到处和安装（拓展）
+
+`pip freeze > requirements.txt`
+
+`pip install -r requirements.txt`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
