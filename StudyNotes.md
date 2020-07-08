@@ -521,7 +521,7 @@ python manage.py createsuperuser
 
 
 
-##5.pip一键到处和安装（拓展）
+## 5.pip一键到处和安装（拓展）
 
 `pip freeze > requirements.txt`
 
