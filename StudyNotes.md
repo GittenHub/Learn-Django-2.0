@@ -529,6 +529,22 @@ python manage.py createsuperuser
 
 
 
+# 08.常用的模版标签和过滤器
+
+## 1.继续搭建blog
+
+- [x] models 
+- [x] admin
+- [ ] views
+- [ ] urls
+- [ ] templates
+
+在blog/models.py中新建两个类
+
+在blog/views.py中新建两个方法
+
+在blog文件夹下新建templates文件夹，再在templates中新建html
+
 
 
 
