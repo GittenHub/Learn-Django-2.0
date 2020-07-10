@@ -543,7 +543,9 @@ python manage.py createsuperuser
 
 在blog/views.py中新建两个方法
 
-在blog文件夹下新建templates文件夹，再在templates中新建html
+在blog文件夹下新建templates文件夹，再在templates中新建blog_list.html和blog_detail.html
+
+在blog文件夹下新建urls.py文件，再在总urls.py文件中做好路由映射
 
 
 
