@@ -640,7 +640,100 @@ CSS ：层叠样式表   修饰HTML
 
 韩顺平老师  学习html+css   w3cschool
 
+##  3、使用静态文件
 
+CSS代码  -->  CSS文件（js文件、图片）  统称为静态文件
+
+设置静态文件的路径，在settings.py最后增加
+
+```python
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),   #设置静态文件的路径
+]
+```
+
+
+
+### 方法一：直接在HTML模板中引入css
+
+```html
+<link rel="stylesheet" type="text/css" href="/static/base.css">
+```
+
+### 方法二：load staticfiles
+
+在模板文件中
+
+```html
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
+{% block header_extends %}{% endblock %}
+```
+
+```html
+{% load staticfiles %}
+
+{% block header_extends %}
+    <link rel="stylesheet" type="text/css" href="{% static 'home.css'%}">
+{% endblock %}
+```
+
+
+
+# 11.CSS框架协助前段布局
+
+## 1、为什么用CSS框架
+
+1. 不会或不怎么会CSS
+2. 不知道如何设计前段样式
+3. 从头到尾写整个网站的CSS代码量大
+4. ...
+
+##  2、如何选择CSS框架
+
+- 易用性
+- 兼容性
+- 大小
+- 效果
+- 功能
+
+### bootstrap
+
+- 文档齐全，使用简单
+- 兼容较多浏览器
+- 非轻量级
+- 扁平、简洁
+- 组件齐全、响应式
+
+## 3、部署Bootstrap
+
+1. 打开bootstrap网站www.bootcss.com
+2. 下载bootstrap（选择用于生产环境的bootstrap）
+3. 引用bootstrap
+4. 开始使用
+
+### bootstrap基本模板
+
+1. 中文语言设置
+
+   ```HTML
+   <html lang="zh-CN">
+   ```
+
+2. 头信息设置
+
+   ```html
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">  
+   <!-- 告诉ie浏览器使用什么内核 -->
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <!-- 响应式布局 -->
+   ```
+
+   
+
+# 12.Bootstrap响应式布局
 
 
 
