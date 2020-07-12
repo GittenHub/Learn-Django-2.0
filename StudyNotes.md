@@ -531,7 +531,7 @@ python manage.py createsuperuser
 
 # 08.常用的模版标签和过滤器
 
-## 1.继续搭建blog
+## 1、继续搭建blog
 
 - [x] models 
 - [x] admin
@@ -547,9 +547,98 @@ python manage.py createsuperuser
 
 在blog文件夹下新建urls.py文件，再在总urls.py文件中做好路由映射
 
+## 2、常用的模板标签
+
+- 循环： for
+- 条件： if（可逻辑判断）、ifequal、ifnotequal
+- 链接： url
+- 模板嵌套：block、extends、include
+- 注释：{# #}
+
+### 标签
+
+```html
+ <h3>{{ blog.title }}</h3>   
+{% url 'blog_detail' blog.pk %}
+```
+
+两种均为标签
+
+## 3、常用的过滤器
+
+- 日期：date
+- 字数截取：truncatechars、truncatechars_html、truncatewords、truncatewords_html
+- 是否信任html：safe
+- 长度：length
+
+> 参考：https://docs.djangoproject.com/zh-hans/2.0/ref/templates/builtins/
+
+```html
+<p>一共有{{ blogs|length }}篇博客</p>
+<p>发表日期：{{ blog.created_time|date:"Y-m-d h:n:s" }}</p>
+```
+
+### 在templates中的html里使用过滤器
+
+```html
+<p>{{ blog.content|truncatechars:30 }}</p>   <!-- 过滤器，显示前30个字符 -->
+<p>{{ blog.content|truncatewords:30 }}</p>   <!-- 过滤器，显示前30个英文单词，空格隔开 -->
+```
 
 
 
+
+
+# 09.模板嵌套
+
+## 1、常用的模板标签
+
+- 循环： for
+- 条件： if（可逻辑判断）、ifequal、ifnotequal
+- 链接： url
+- 模板嵌套：block、extends、include
+- 注释：{# #}
+
+## 2、全局模板文件夹
+
+在mysite总目录下心间templates文件夹
+
+然后修改 settings.py -->TEMPLATES --> DIRS
+
+```python
+'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),    #定义全局模板文件夹路径
+        ],
+```
+
+
+
+## 3、模板文件设置建议
+
+- app模板文件 --> app
+- project模板文件 --> project
+
+
+
+# 10.使用CSS美化页面
+
+## 1、页面设计
+
+- 导航栏
+- 主题内容
+- 尾注
+
+### 导航栏设计
+
+LOGO网站名称 + 导航
+
+xxxxx的网站   首页  博客
+
+## 2、使用CSS
+
+CSS ：层叠样式表   修饰HTML
+
+韩顺平老师  学习html+css   w3cschool
 
 
 
