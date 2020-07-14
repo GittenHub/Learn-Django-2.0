@@ -18,3 +18,6 @@ class Blog(models.Model):
 
     def __str__(self):
         return "Blog: %s" % self.title
+
+    class Meta:
+        ordering = ['-created_time']  # 在最前面加负表示倒序，这里可以设置多个排序方式

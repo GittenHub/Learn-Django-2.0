@@ -913,12 +913,60 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> blog.save()
 >>> Blog.objects.all()
 <QuerySet [<Blog: Blog: 长内容的博客>, <Blog: Blog: 随笔2>, <Blog: Blog: Django1>, <Blog: Blog: shell下第1篇>]>
+>>>
+>>>
+>>>
+>>>
+>>> for i in range(1,31):
+...     blog = Blog()
+...     blog.title = "for %s" %i
+...     blog.content = "xxxxx:%s" % i
+...     blog.blog_type = blog_type
+...     blog.author = user
+...     blog.save()
+... 
+>>> Blog.objects.all().count()
+34
+```
+
+## 4、分页器实现分页
+
+![](https://gitee.com/gitten/PicBed/raw/master/20200714102155.png)
+
+
+
+```python
+(django2.0) gitten@Gittens-Macbook mysite % python manage.py shell
+Python 3.8.3 (default, Jul  2 2020, 11:26:31) 
+[Clang 10.0.0 ] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> dir()
+['__builtins__']
+>>> from django.core.paginator import Paginator
+>>> from blog.models import Blog
+>>> blogs = Blog.object.all()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: type object 'Blog' has no attribute 'object'
+>>> blogs = Blog.objects.all()
+>>> blogs.count()
+34
+>>> paginator = Paginator(blogs,10)
+<console>:1: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'blog.models.Blog'> QuerySet.
+# 这里报了一个错误，是因为我们在models中没有设置默认排序方式，去修改
 >>> 
 ```
 
-> 0:15:42
+### 修改models.py的默认排序方式
 
+## 5、分页的使用
 
+前端：发送请求，请求打开具体分页内容
+
+后端：处理情况，返回具体分页内容相应情况
+
+` http://127.0.0.1:8000/blog/?page=4`中的`?page=4`表示GET传递的参数
 
 
 
