@@ -972,6 +972,17 @@ AttributeError: type object 'Blog' has no attribute 'object'
 
 
 
+# 14. 优化分页展示
+
+## 1、优化页面展示
+
+友好的用户体验
+
+1. 当前页面高亮
+2. 不好过多页码选择，影响布局
+
+
+
 
 
 
