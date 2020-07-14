@@ -983,9 +983,19 @@ AttributeError: type object 'Blog' has no attribute 'object'
 
 
 
+> shift + F5  ： 强制刷新服务器
 
 
 
+## 2、settings自定义设置
+
+公用全局设置可放在settings中，统一管理
+
+`from django.conf import settings`
+
+`settings.XXX`
 
 
+
+# 15. 上下篇博客和按月分类
 
