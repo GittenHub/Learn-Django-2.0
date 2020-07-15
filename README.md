@@ -999,3 +999,111 @@ AttributeError: type object 'Blog' has no attribute 'object'
 
 # 15. 上下篇博客和按月分类
 
+
+
+## 1、上一篇和下一篇博客
+
+对比当前博客，得到上一篇或下一篇
+
+##  2、filter筛选条件
+
+等于：直接筛选
+
+其他常用查找类型：
+
+- 大于：__gt(greater than)
+
+  ```python
+  context['previous_blog'] = Blog.objects.filter(created_time__gt=blog.created_time).last()  
+  #取创建时间比当前博客大的博客列表中的最后一条
+  ```
+
+- 大于等于：__gte
+
+- 小于：__lt(less than)
+
+- 小于等于：__lte
+
+  > 上述这些大多用于数字的比较
+
+- 包含：__contains(加i忽略大小写)
+
+  ```python
+  >>> from blog.models import Blog
+  >>> Blog.objects.filter(title__contains='django')
+  <QuerySet [<Blog: Blog: Django1>]>   #因为sqlite不区分大小写，所以也筛选出来了
+  >>> Blog.objects.filter(title__icontains='django')
+  <QuerySet [<Blog: Blog: Django1>]>
+  ```
+
+- 开头是：__startswith
+
+- 结尾是：__endswith
+
+  > 字符串大多用饱含、开头是、结尾是
+
+- 其中之一：__in
+
+- 范围：__range
+
+  ```python
+  >>> Blog.objects.filter(id__in=[1, 3, 4])
+  <QuerySet [<Blog: Blog: 随笔2>, <Blog: Blog: 长内容的博客>]>
+  >>> Blog.objects.filter(id__range=(3, 6))
+  <QuerySet [<Blog: Blog: shell下第1篇>, <Blog: Blog: Django1>, <Blog: Blog: 随笔2>, <Blog: Blog: 长内容的博客>]>
+  ```
+
+## 3、exclude排除条件
+
+filter无法去筛选“不符合某种条件”的对象
+
+exclude的用法和filter一样，都是得到查询（QuerySet）
+
+相当于filter条件取反
+
+filter等于 => 不等于
+
+```python
+>>> Blog.objects.exclude(pk=3)   # 筛选出pk不等于3的博客
+<QuerySet [<Blog: Blog: for 30>, <Blog: Blog: for 29>, <Blog: Blog: for 28>, <Blog: Blog: for 27>, <Blog: Blog: for 26>, <Blog: Blog: for 25>, <Blog: Blog: for 24>, <Blog: Blog: for 23>, <Blog: Blog: for 22>, <Blog: Blog: for 21>, <Blog: Blog: for 20>, <Blog: Blog: for 19>, <Blog: Blog: for 18>, <Blog: Blog: for 17>, <Blog: Blog: for 16>, <Blog: Blog: for 15>, <Blog: Blog: for 14>, <Blog: Blog: for 13>, <Blog: Blog: for 12>, <Blog: Blog: for 11>, '...(remaining elements truncated)...']>
+```
+
+##4、条件中的双下划线
+
+1. 字段查询类型
+2. 外键拓展（以博客分类为例）
+3. 日期拓展（以月份分类为例）
+4. 支持链式查询：可以一直链接下去
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

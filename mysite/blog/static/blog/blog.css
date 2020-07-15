@@ -26,3 +26,7 @@ ul.blog-info-description li {
 div.blog-content {
     text-indent:2em;  /*首行缩进2字符*/
 }
+div.blog-more {
+    margin-top: 1em;
+    
+}
