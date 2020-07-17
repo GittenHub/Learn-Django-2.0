@@ -33,7 +33,7 @@ $ conda activate envs (envs)
 $ pip install Django==2.0
 ```
 
-# 02 入门仪式：Hello World
+# 02.入门仪式：Hello World
 
 ## 创建项目命令：
 
@@ -105,7 +105,7 @@ $ python manage.py createsuperuser
 
 >命令行帮助：python manage.py help
 
-# 03 基本响应结构
+# 03.基本响应结构
 
 ## 多种相似结构的页面处理方式
 
@@ -1075,15 +1075,159 @@ filter等于 => 不等于
 3. 日期拓展（以月份分类为例）
 4. 支持链式查询：可以一直链接下去
 
+# 16.博客分类统计
+
+## 1、annotat注释
+
+使用annotate拓展查询字段
+
+```python
+context['blog_types'] = BlogType.objects.annotate(blog_count=Count('blog'))
+```
 
 
 
+# 17. 博客后台富文本编辑
+
+## 1、使用html丰富页面
+
+- 简繁文本编辑
+  - 直接贴入html代码
+- 富文本编辑
+  - 最终解析成html
+    - 富文本编辑器
+    - markdown编辑器
+
+### 直接贴入html
+
+直接写入因为安全问题，无法识别为html语言，需要在模板文件中修改修饰器`{{ blog.content|safe }}`在后面增加safe
+
+```python
+<div class="blog-content">{{ blog.content|safe }}</div>   
+```
+
+但此时列表中的内容简述会有html语句
+
+在列表html文件中修改模板文件，增加修饰器`|striptags`，表示忽略html标签
+
+```django
+<p>{{ blog.content|striptags|truncatechars:120 }}</p>
+```
+
+## 2、使用django-ckeditor富文本编辑器
+
+**选择标准：**
+
+- 具有基本的富文本编辑功能
+- 可以上传图片
+- 可以查看源码
+- 有持续更新（维护）
+
+## 3、安装django-ckeditor
+
+1. 安装
+
+   `pip install django-ckeditor`
+
+2. 注册应用
+
+   'ckeditor'
+
+3. 配置model
+
+   把字段改为RichTextField
+
+> Django-ckeditor在语言设置为zh-Hans时有识别错误为繁体，改为zh-hans就可以了
+
+## 4、添加上传图片功能
+
+1. 安装
+
+   `pip install pillow`  pillow是一个用于处理图片的库
+
+2. 注册应用
+
+   ```
+    INSTALLED_APPS = [
+       'ckeditor_uploader',
+   ]
+   ```
+
+3. 配置settings.py，在最后增加
+
+   ```python
+   # media配置
+   MEDIA_URL = '/media/'
+   MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+   
+   # 配置ckeditor
+   CKEDITOR_UPLOAD_PATH = 'upload/'
+   ```
+
+4. 配置url.py
+
+   ```python
+   urlpatterns = [
+       path('ckeditor', include('ckeditor_uploader.urls')),
+   ]
+   
+   urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+   ```
+
+5. 配置model
+
+   此时models类中仍不能上传文件，将其修改至如下：
+
+   ```python 
+   from ckeditor_uploader.fields import RichTextUploadingField
+   
+   class Blog(models.Model):  
+       content = RichTextUploadingField()
+   ```
+
+> 这些配置都可以在pypi.python.org网站中找到，搜索'django-ckeditor'
 
 
 
+# 18.博客阅读简单计数
+
+## 1、简单计数处理
+
+1. Blog模型添加数字字段记录
+2. 每次有人打开，记录数+1
+
+## 2、自定义技术规则
+
+可规定，怎么才算阅读一次
+
+1. 无视是否同一人，每次打开都记录
+2. 若同一个人，每隔多久才算阅读一次
+
+```python
+def blog_detail(request,blog_pk):
+    blog = get_object_or_404(Blog, pk=blog_pk)
+    if not request.COOKIES.get('blog_%s_readed' % blog_pk):
+        blog.readed_num += 1
+        blog.save()
+    context = {}
+    context['blog'] = blog
+    context['previous_blog'] = Blog.objects.filter(created_time__gt=blog.created_time).last()  # 取创建时间比当前博客大的博客列表中的最后一条
+    context['next_blog'] = Blog.objects.filter(created_time__lt=blog.created_time).first()  # 取创建时间比当前博客小的博客列表中的第一条｜可以将first()替换为[0]进行切片
+    response = render_to_response('blog/blog_detail.html',context)  # 响应
+    #response.set_cookie('blog_%s_readed' % blog_pk, 'true', max_age=60, expires=datetime()) # max_age有效时间以秒计,expires设置一个datetime，两者冲突
+    response.set_cookie('blog_%s_readed' % blog_pk, 'true')
+    return response
+```
 
 
 
+## 3、该技术方法缺点
+
+1. 后台编辑博客可能影响数据
+
+   更新时会影响统计，同时访问时会影响编辑最后时间
+
+1. 功能单一，无法统计某一天的阅读量
 
 
 
