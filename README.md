@@ -1,6 +1,10 @@
 # Learn-Django-2.0
 B站课程学习https://www.bilibili.com/video/BV1GW411Y7EU
 
+# 课程源码地址
+
+Https://github,com/HaddyYang/django2.0-course
+
 # 目录
 
 [TOC]
@@ -1261,7 +1265,7 @@ def blog_detail(request,blog_pk):
 
 ContentType：记录了Django中所有模型，建立了一个表（也就是模型ContentType）
 
-> 34:31
+
 
 
 
