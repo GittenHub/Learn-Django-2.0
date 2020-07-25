@@ -1,7 +1,6 @@
 from django.contrib.contenttypes.models import ContentType
 from .models import ReadNum
 
-
 def read_statistic_once_read(request, obj):
     ct = ContentType.objects.get_for_model(obj)
     key = "%s_%s_read" % (ct.model, obj.pk)

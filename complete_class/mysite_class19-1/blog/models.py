@@ -33,4 +33,5 @@ class Blog(models.Model):
 
 class ReadNum(models.Model):
     read_num = models.IntegerField(default=0)
-    blog = models.OneToOneField(Blog, on_delete=models.DO_NOTHING)  # on_delete 删除阅读数时是否删除博客;OneToOneField表示一对一，ForeignKey表示多对一，ManyToManyField表示多对多
+    blog = models.OneToOneField(Blog, on_delete=models.DO_NOTHING)  
+    # OneToOneField表示一对一，ForeignKey表示多对一，ManyToManyField表示多对多;on_delete 删除阅读数时是否删除博客;
