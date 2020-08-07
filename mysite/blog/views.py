@@ -80,10 +80,8 @@ def blog_detail(request,blog_pk):
     context['next_blog'] = Blog.objects.filter(created_time__lt=blog.created_time).first()  # 取创建时间比当前博客小的博客列表中的第一条｜可以将first()替换为[0]进行切片
     context['blog'] = blog
     context['comments'] = comments
-    data = {}
-    data['content_type'] = blog_content_type.model
-    data['object_id'] = blog_pk
-    context['comment_form'] = CommentForm(initial=data) # 对forms表单中的类进行初始化定义值，initial对应的是一个list
+    context['comment_form'] = CommentForm(initial={'content_type':blog_content_type.model, 'object_id':blog_pk}) 
+    # 对forms表单中的类进行初始化定义值，initial对应的是一个list; blog_content_type是一个对象，blog_content_type.model是这个对象名称字符串
     response = render(request, 'blog/blog_detail.html',context)  # 响应
     response.set_cookie(read_cookie_key, 'true')  # 阅读cookie标记
 

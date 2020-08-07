@@ -44,8 +44,8 @@
                     <h3 class="comment-area-title">提交评论</h3>
                     {% if user.is_authenticated %}
                         <form action="{% url 'update_comment' %}" method="POST" style="overflow:hidden;">
-                            {% csrf_token %}
                             <label>{{ user.username }}，欢迎评论~</label>
+                            {% csrf_token %}
                             {{ comment_form }}
                             <input type="submit" value="评论" class="btn btn-primary" style="float:right">
                         </form>
