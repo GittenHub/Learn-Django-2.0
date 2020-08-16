@@ -1,13 +1,9 @@
-from django.shortcuts import render, get_object_or_404  #不使用render，改使用render_to_response
+from django.shortcuts import render, get_object_or_404 
 from django.core.paginator import Paginator
 from django.conf import settings
 from django.db.models import Count
-from django.contrib.contenttypes.models import ContentType
-
 from .models import Blog, BlogType # , ReadNum
 from read_statistics.utils import read_statistic_once_read
-from comment.models import Comment
-from comment.forms import CommentForm
 
 #each_page_blogs_number = settings.EACH_PAGE_BLOGS_NUMBER  #分页页码
 
@@ -35,7 +31,7 @@ def get_blog_list_common_data(request, blogs_all_list):
 
     # 获取日期归档对应博客数量
     blog_dates = Blog.objects.dates('created_time','month', order='DESC')
-    blog_dates_dict = {}  # 创建一个字典
+    blog_dates_dict = {} 
     for blog_date in blog_dates:
         blog_count = Blog.objects.filter(created_time__year=blog_date.year, 
                                          created_time__month=blog_date.month).count()
@@ -75,7 +71,7 @@ def blog_detail(request,blog_pk):
     context = {}
     context['previous_blog'] = Blog.objects.filter(created_time__gt=blog.created_time).last()  # 取创建时间比当前博客大的博客列表中的最后一条
     context['next_blog'] = Blog.objects.filter(created_time__lt=blog.created_time).first()  # 取创建时间比当前博客小的博客列表中的第一条｜可以将first()替换为[0]进行切片
-    context['blog'] = blog    
+    context['blog'] = blog  
     response = render(request, 'blog/blog_detail.html',context)  # 响应
     response.set_cookie(read_cookie_key, 'true')  # 阅读cookie标记
 
