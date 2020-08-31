@@ -21,7 +21,6 @@ def home(request):
     blog_content_type = ContentType.objects.get_for_model(Blog)
     dates, read_nums = get_seven_days_read_data(blog_content_type)
 
-
     # 获取7天热门博客的缓存数据
     hot_blogs_for_7_days = cache.get('hot_blogs_for_7_days')
     if hot_blogs_for_7_days is None:

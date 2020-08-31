@@ -3,7 +3,8 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.http import JsonResponse
-from .forms import LoginForm, RegForm
+from .forms import LoginForm, RegForm, ChangeNicknameForm
+from .models import Profile
 
 def login_for_modal(request):
     login_form = LoginForm(request.POST)
@@ -72,3 +73,24 @@ def logout(request):
 def user_info(request):
     context = {}
     return render(request, 'user/user_info.html', context = {})
+
+def change_nickname(request):
+    redirect_to = request.GET.get('from', reverse('home'))
+    if request.method == 'POST':
+        form = ChangeNicknameForm(request.POST, user=request.user)
+        if form.is_valid():
+            nicknaem_new = form.cleaned_data['nickname_new']
+            profile, created = Profile.objects.get_or_create(user=request.user)
+            profile.nickname = nicknaem_new
+            profile.save()
+            return redirect(redirect_to)
+    else:
+        form = ChangeNicknameForm()
+
+    context = {}
+    context['form'] = form
+    context['page_title'] = '修改昵称'
+    context['form_title'] = '修改昵称'
+    context['submit_title'] = '修改'
+    context['return_back_url'] = redirect_to
+    return render(request, 'form.html', context)

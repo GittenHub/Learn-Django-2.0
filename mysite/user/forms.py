@@ -56,3 +56,32 @@ class RegForm(forms.Form):
         if password != password_again:
             raise forms.ValidationError('两次输入的密码不一致')
         return password_again
+
+class ChangeNicknameForm(forms.Form):
+    nickname_new = forms.CharField(      # 创建一个新的form
+        label='新的昵称', 
+        max_length=20,
+        widget=forms.TextInput(
+            attrs={'class':'form-control', 'placeholder':'请输入新的昵称'}
+        )
+    )
+    # 继承forms.Form进行实例化，在这个类中隐藏一个初始化的方法
+    def __init__(self, *args, **kwargs):  # *args表示任意类型的参数；**kwargs表示任意关键字的参数
+        if 'user' in kwargs: # 如果'user'在kwargs中, 做以下操作
+            self.user = kwargs.pop('user') # pop()表示将'user'的内容从kwargs中拿出来剔除，放入self.user中，防止在super初始化时有参数报错
+        super(ChangeNicknameForm, self).__init__(*args, **kwargs) # 继承初始化的方法
+
+    def clean(self):
+        # 判断用户是否登录
+        if self.user.is_authenticated:
+            self.cleaned_data['user'] = self.user
+        else:
+            raise forms.ValidationError('用户尚未登录')
+        return self.cleaned_data
+
+    def clean_nickname_new(self):
+        nickname_new = self.cleaned_data.get('nickname_new', '').strip()
+        if nickname_new == '':
+            raise ValidationError("新的昵称不能为空")
+        return nickname_new
+

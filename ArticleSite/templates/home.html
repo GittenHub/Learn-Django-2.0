@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}文章类网站{% endblock %}
+{% block header_extends %}
+    <link rel="stylesheet" type="text/css" href="{% static 'home.css'%}">
+{% endblock %}
+{% block nav_home_active %}active{% endblock %}
+{% block content %}
+    <h1>类型一：</h1>
+    {% for article in articles_t1 %}
+    <ul>
+    <li><a href=" {% url 'article_detail' article.pk %} ">
+        {{ article.title|truncatechars:20 }}  ({{ article.created_time|date:"m-d" }})
+    </a></li>
+    </ul>
+    {% endfor %}
+    <h1>类型二：</h1>
+    {% for article in articles_t2 %}
+    <ul>
+    <li><a href=" {% url 'article_detail' article.pk %} ">
+        {{ article.title|truncatechars:20 }}  ({{ article.created_time|date:"m-d" }})
+    </a></li>
+    </ul>
+    {% endfor %}
+{% endblock content %}

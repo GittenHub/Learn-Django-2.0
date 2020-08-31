@@ -1,0 +1,10 @@
+from django.contrib import admin
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.article_types_list, name='article_types_list'),
+    path('<int:article_pk>', views.article_detail, name='article_detail'),
+    path('type/<int:article_pk>', views.article_with_type, name='article_with_type'),
+    path('data/<int:article_pk>', views.article_with_date, name='article_with_date'),
+]

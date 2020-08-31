@@ -24,12 +24,12 @@ def update_comment(request):
 
         # 返回数据
         data['status'] = 'SUCCESS'
-        data['username'] = comment.user.username
+        data['username'] = comment.user.get_nickname_or_username()
         #data['comment_time'] = comment.comment_time.strftime('%Y-%m-%d %H:%m:%S')
         data['comment_time'] = comment.comment_time.timestamp() # timestamp()是时间戳方法，返回一串数字
         data['text'] = comment.text
         data['content_type'] = ContentType.objects.get_for_model(comment).model
-        data['reply_to'] = comment.reply_to.username if not parent is None else ''
+        data['reply_to'] = comment.reply_to.get_nickname_or_username() if not parent is None else ''
         data['pk'] = comment.pk 
         data['root_pk'] = comment.root.pk if not comment.root is None else ''
     else:

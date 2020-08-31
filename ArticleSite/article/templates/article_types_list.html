@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}我的网站{% endblock %}
+
+{% block content %}
+    {% for article_type in article_types %}
+    <ul>
+    <li><a href=" {% url 'article_with_type' article_type.pk %} ">
+        {{ article_type }} 
+    </a></li>
+    </ul>
+    {% endfor %}
+{% endblock content %}
