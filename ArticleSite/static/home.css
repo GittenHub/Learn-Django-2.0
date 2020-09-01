@@ -10,6 +10,22 @@ div#container {
     min-width: 20em;
     max-width: 30em;
 }
+div.carousel-inner{
+    height: 252px;
+}
+div.carousel-inner img {
+    width: 100%;
+    height: 100%;
+}
+div.carouselPic{
+    padding-right: 0px;
+}
+div.carouselBoard{
+    padding-left: 0px;  
+}
+div.article_type_board{
+    height: 15em;
+}
 div.hot-data {
     text-align: center;
     margin-top: 2em;
