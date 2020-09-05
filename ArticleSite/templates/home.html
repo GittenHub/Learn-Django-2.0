@@ -9,7 +9,7 @@
 
 <div class="container">    
     <div class="row">
-        <div class="col-xs-7 col-xs-offset-1 carouselPic">
+        <div class="col-xs-7 carouselPic">
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                 <!-- Indicators -->
                 <ol class="carousel-indicators">
@@ -21,19 +21,19 @@
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
                     <div class="item active">
-                        <img src="https://static.runoob.com/images/mix/img_fjords_wide.jpg">
+                        <img src="https://dpic.tiankong.com/17/fp/QJ5102997902.jpg">
                         <div class="carousel-caption">
                             <h1>照片标题一</h1>
                         </div>
                     </div>
                     <div class="item">
-                        <img src="https://static.runoob.com/images/mix/img_nature_wide.jpg">
+                        <img src="https://dpic.tiankong.com/da/sm/QJ5102731334.jpg">
                         <div class="carousel-caption">
                             <h1>照片标题二</h1>
                         </div>
                     </div>
                     <div class="item">
-                        <img src="https://static.runoob.com/images/mix/img_mountains_wide.jpg">
+                        <img src="https://dpic.tiankong.com/db/j9/QJ9126442694.jpg">
                         <div class="carousel-caption">
                             <h1>照片标题三</h1>
                         </div>
@@ -51,9 +51,9 @@
                 </a>
             </div>
         </div>
-        <div class="col-xs-3 carouselBoard">
-            <div class="panel panel-default" style="border-radius:0px">
-                <div class="panel-heading">类型二：</div>
+        <div class="col-xs-5 carouselBoard">
+            <div class="panel panel-default article_pic_board" style="border-radius:0px">
+                <div class="panel-heading">图片新闻：</div>
                 <div class="panel-body article_type_board" >
                     {% for article in articles_t2 %}
                     <ul>
@@ -67,9 +67,9 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-5 col-xs-offset-1">
-            <div class="panel panel-default">
-                <div class="panel-heading">类型一：</div>
+        <div class="col-xs-6 ">
+            <div class="panel panel-default article_board">
+                <div class="panel-heading">文章类型一：</div>
                 <div class="panel-body article_type_board" >
                     {% for article in articles_t1 %}
                     <ul>
@@ -81,9 +81,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-5">
-            <div class="panel panel-default">
-                <div class="panel-heading">类型二：</div>
+        <div class="col-xs-6">
+            <div class="panel panel-default article_board">
+                <div class="panel-heading">文章类型二：</div>
                 <div class="panel-body article_type_board" >
                     {% for article in articles_t2 %}
                     <ul>

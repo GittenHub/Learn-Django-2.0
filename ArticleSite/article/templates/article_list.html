@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}我的网站{% endblock %}
+{% block nav_article_active %}active{% endblock %}
+
+{% block content %}
+<div class="container">    
+    <div class="row">
+        <div class="col-xs-9">
+            <div class="panel panel-default article_pic_board" style="border-radius:0px">
+                <div class="panel-heading">{% block article_list_title %}文章列表（一共有 篇文章）{% endblock %}</div>
+                <div class="panel-body article_type_board" >
+                    {% for article in articles %}
+                    <ul>
+                    <li><a href=" {% url 'article_detail' article.pk %} ">
+                        【{{ article.article_type }}】 {{ article.title|truncatechars:20 }}
+                    </a>
+                    <span>({{ article.created_time|date:"m-d" }})</span>
+                    </li>
+                    </ul>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="panel panel-default article_pic_board" style="border-radius:0px">
+                <div class="panel-heading">博客分类</div>
+                <div class="panel-body article_type_board" >
+                    {% for article_type in article_types %}
+                    <ul>
+                    <li><a href=" {% url 'article_with_type' article_type.pk %} ">
+                        {{ article_type }} 
+                    </a></li>
+                    </ul>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+{% endblock content %}
+
+
